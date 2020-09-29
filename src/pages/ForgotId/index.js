@@ -18,7 +18,7 @@ export default function ForgotId(){
 
     try{
       await api.post('company/forgot-id',{email})
-      alert("A Id será enviada em alguns instantes!")
+      alert("Se estiver cadastrado a Id será enviada em alguns instantes!")
       history.push('/')
     }catch{
       alert("Falha no processo. Tente Novamente!")
