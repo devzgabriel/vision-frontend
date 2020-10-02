@@ -73,6 +73,21 @@ export default function Profile(){
     history.push('/')
   }
 
+  function defineSeeMoreColor(stats){
+    switch (stats) {
+      case 1:
+        return "background-color: #2020d8; !important"
+      case 2:
+        return "background-color: #d00000; !important"
+      case 3:
+        return "background-color: #f77f00; !important"
+    
+      default:
+        return "background-color: #2020d8; !important"
+    }
+
+  }
+
   return(
     <div className="profile-container">
       <header>
@@ -88,7 +103,7 @@ export default function Profile(){
       <h1>Funcionários Cadastrados</h1>
 
       <ul>
-        {workers.map(worker => (
+        {workersWithStats.map(worker => (
         <li key={worker.id}>
           <strong>Funcionário:</strong>
           <p>{worker.name}</p>
@@ -103,7 +118,7 @@ export default function Profile(){
             <FiTrash2 size={20} color="#a8a8b3"/>
           </button>
 
-          <div className='more'>
+          <div className='more' style={defineSeeMoreColor(worker.stats)} >
             <button onClick={() => handleDeleteWorker(worker.id)} type='button' >
               {/* <FiTrash2 size={20} color="#a8a8b3"/> */}
               <p>Ver Mais</p>
