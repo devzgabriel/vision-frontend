@@ -3,6 +3,7 @@ import {Link,useHistory} from 'react-router-dom'
 import {FiPower, FiTrash2} from 'react-icons/fi'
 
 import api from '../../services/api'
+import eye from '../../services/eye'
 
 import './styles.css'
 import logoImg from '../../assets/eye.svg'
@@ -10,6 +11,7 @@ import logoImg from '../../assets/eye.svg'
 
 export default function Profile(){
   const [workers, setWorkers] = useState([])
+  const [workersWithStats, setWorkersWithStats] = useState({})
 
   const companyName = localStorage.getItem('companyName')
   const companyId = localStorage.getItem('companyId')
@@ -17,6 +19,7 @@ export default function Profile(){
   const history = useHistory()
 
   useEffect(() =>{
+
     api.get('workers',{
       headers:{
         Authorization: companyId
@@ -24,7 +27,27 @@ export default function Profile(){
     }).then(response =>{
       setWorkers(response.data)
     })
-  },[companyId])
+
+    eye.get('worker-stats',{
+      headers:{
+        Authorization: companyId,
+        id:null
+      }
+    }).then(response=>{
+      workers.forEach(worker => {
+        if(worker.id===response.data.id){
+          setWorkersWithStats(...workersWithStats, {
+            id: worker.id,
+            name: worker.name, 
+            code: worker.code, 
+            occupation: worker.occupation,
+            stats: response.data.stats
+          })
+        }
+      })
+      setWorkers(workersWithStats)
+    })
+  },[companyId, workers, workersWithStats])
 
   async function handleDeleteWorker(id){
     try {
