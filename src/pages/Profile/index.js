@@ -85,7 +85,6 @@ export default function Profile(){
       default:
         return "background-color: #2020d8; !important"
     }
-
   }
 
   return(
@@ -118,7 +117,7 @@ export default function Profile(){
             <FiTrash2 size={20} color="#a8a8b3"/>
           </button>
 
-          <div className='more' style={defineSeeMoreColor(worker.stats)} >
+          <div className='more' style={() => defineSeeMoreColor(worker.stats)} >
             <button onClick={() => handleDeleteWorker(worker.id)} type='button' >
               {/* <FiTrash2 size={20} color="#a8a8b3"/> */}
               <p>Ver Mais</p>

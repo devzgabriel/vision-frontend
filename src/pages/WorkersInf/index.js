@@ -37,6 +37,20 @@ export default function InfWorker(){
     })
   },[workerId,companyId])   //if err => remove companyId
 
+  function writeStats(stats){
+    switch (stats) {
+      case 1:
+        return "Está equipado, tudo ok!"
+      case 2:
+        return "Não está equipado, tome cuidado!"
+      case 3:
+        return "O funcionário está em intervalo."
+    
+      default:
+        return "O funcionário não está sendo verificado no momento."
+    }
+  }
+
   return(
     <div className="worker-container">
       <header>
@@ -55,7 +69,7 @@ export default function InfWorker(){
         <p><strong>Código do Funcionário: </strong>{worker.code}</p>
         <p><strong>Função do Funcionário: </strong>{worker.occupation}</p>
 
-        <p><strong>Situação do Funcionário: </strong>{workerInfo.status}</p>
+        <p><strong>Situação do Funcionário: </strong>{()=> writeStats(workerInfo.stats)}</p>
 
       </div>
 
