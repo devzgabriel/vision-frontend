@@ -103,7 +103,7 @@ export default function Profile(){
       <h1>Funcionários Cadastrados</h1>
 
       <ul>
-        {workersWithStats.map(worker => (
+        {workers.map(worker => (
         <li key={worker.id}>
           <strong>Funcionário:</strong>
           <p>{worker.name}</p>
