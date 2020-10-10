@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import {FiArrowLeft} from 'react-icons/fi'
 
 import api from '../../services/api'
-import eye from '../../services/eye'
 
 import './styles.css'
 
@@ -16,7 +15,6 @@ export default function InfWorker(){
   const workerId = localStorage.getItem('workerId')
 
   const [worker, setWorker] = useState([])
-  const [workerInfo, setWorkerInfo] = useState({id:workerId, stats:'Não verificado'})
 
   useEffect(() =>{
     api.get(`worker/${workerId}`, {
@@ -26,30 +24,8 @@ export default function InfWorker(){
     }).then(response =>{
       setWorker(response.data.worker)
     })
-
-    eye.get('worker-stats',{
-      headers:{
-        Authorization: companyId,
-        id:workerId
-      }
-    }).then(response=>{
-      setWorkerInfo(response.data)
-    })
   },[workerId,companyId])   //if err => remove companyId
 
-  function writeStats(stats){
-    switch (stats) {
-      case 1:
-        return "Está equipado, tudo ok!"
-      case 2:
-        return "Não está equipado, tome cuidado!"
-      case 3:
-        return "O funcionário está em intervalo."
-    
-      default:
-        return "O funcionário não está sendo verificado no momento."
-    }
-  }
 
   return(
     <div className="worker-container">
@@ -69,7 +45,7 @@ export default function InfWorker(){
         <p><strong>Código do Funcionário: </strong>{worker.code}</p>
         <p><strong>Função do Funcionário: </strong>{worker.occupation}</p>
 
-        <p><strong>Situação do Funcionário: </strong>{()=> writeStats(workerInfo.stats)}</p>
+        <p><strong>Situação do Funcionário: </strong>{worker.status || 'Sem Informações'}</p>
 
       </div>
 
