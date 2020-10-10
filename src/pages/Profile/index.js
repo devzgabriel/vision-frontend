@@ -10,6 +10,7 @@ import logoImg from '../../assets/eye.svg'
 
 export default function Profile(){
   const [workers, setWorkers] = useState([])
+  const [totalStatistic, setTotalStatistic] = useState(0)
 
   const companyName = localStorage.getItem('companyName')
   const companyId = localStorage.getItem('companyId')
@@ -51,19 +52,25 @@ export default function Profile(){
     history.push('/')
   }
 
+  function statisticCounter(status){
+    setTotalStatistic(0)
+    workers.forEach((worker)=>{worker.status===status && setTotalStatistic(totalStatistic + 1)})
+    return totalStatistic
+  }
+
   function defineSeeMoreColor(status){
     switch (status) {
       case "Equipado":
-        return "background-color: #2020d8; !important"
+        return "#2020d8"
       case "Não Equipado":
-        return "background-color: #d00000; !important"
+        return "#d00000"
       case "Em Intervalo":
-        return "background-color: #f77f00; !important"
+        return "#f77f00"
       case "Não verificado":
-        return "background-color: #a0a0a0; !important"
+        return "#909090"
     
       default:
-        return "background-color: #2020d8; !important"
+        return "#2020d8"
     }
   }
 
@@ -78,6 +85,42 @@ export default function Profile(){
           <FiPower size={18} color="#2020d8"/>
         </button>
       </header>
+
+      <h1>Estatística Geral</h1>
+
+      <div className="status" >
+        <ul>
+
+          <li>
+            <strong>
+              Equipados:
+            </strong> 
+            {() => statisticCounter("Equipado")}
+          </li>
+
+          <li>
+            <strong>
+              Não Equipados:
+            </strong>
+            {() => statisticCounter("Não Equipado")}
+          </li>
+
+          <li>
+            <strong>
+              Em Intervalo:
+            </strong> 
+            {() => statisticCounter("Em Intervalo")}
+          </li>
+
+          <li>
+            <strong>
+              Sem informações:
+            </strong> 
+            {() => statisticCounter("Não verificado")}
+          </li>
+
+        </ul>
+      </div>
 
       <h1>Funcionários Cadastrados</h1>
 
@@ -97,14 +140,7 @@ export default function Profile(){
             <FiTrash2 size={20} color="#a8a8b3"/>
           </button>
 
-          <div className='more' style={() => defineSeeMoreColor(worker.status)} >
-            <button onClick={() => handleDeleteWorker(worker.id)} type='button' >
-              {/* <FiTrash2 size={20} color="#a8a8b3"/> */}
-              <p>Ver Mais</p>
-            </button>
-          </div>
-
-          <Link className="more" to="/worker/inf" onClick={() => handleFindWorker(worker.id)} >Ver Mais</Link>
+          <Link className="more" style={{backgroundColor: defineSeeMoreColor(worker.status)}} to="/worker/inf" onClick={() => handleFindWorker(worker.id)} >Ver Mais</Link>
 
         </li>
         ))}

@@ -39,7 +39,7 @@
 }
 
 .profile-container h1{
-  margin-top: 80px;
+  margin-top: 36px;
   margin-bottom: 24px;
 }
 
@@ -73,7 +73,7 @@
   border-radius: 8px;
 
   text-decoration: none;
-  background-color: #2020d8;
+  /* background-color: #2020d8; */
   font-size: 16px;
   color: #FFF;
 
@@ -81,10 +81,11 @@
   align-items: center;
   justify-content: center;
 
+  transition : filter 0.8s
 }
 
-.profile-container ul li .more:hover{
-  background-color:#15155a;
+.more:hover{
+  background-color:#15155a !important ;
 }
 
 .profile-container ul li button:hover{
@@ -94,7 +95,7 @@
 .profile-container ul li strong{
   display: block;
   margin-bottom: 16px;
-  color: #41414d;
+  color: #414141;
 }
 
 .profile-container ul li p + strong{
@@ -102,7 +103,7 @@
 }
 
 .profile-container ul li p{
-  color: #737380;
+  color: #414141;
   line-height: 21px;
   font-size: 16px;
 }
