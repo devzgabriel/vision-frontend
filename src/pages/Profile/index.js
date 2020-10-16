@@ -114,10 +114,11 @@ export default function Profile(){
         <ul>
 
           <li>
-            <strong>
+            <strong className="statusText" >
               Verificados:{'   '}
               {verifiedAmount}
-            </strong> 
+            </strong>
+            {/* Botão de ver Lista Aqui */}
           </li>
 
           <li>
