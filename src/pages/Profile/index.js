@@ -10,7 +10,12 @@ import logoImg from '../../assets/eye.svg'
 
 export default function Profile(){
   const [workers, setWorkers] = useState([])
-  const [totalStatistic, setTotalStatistic] = useState(0)
+
+  const [verifiedAmount, setVerifiedAmount] = useState(0)
+  const [notVerifiedAmount, setNotVerifiedAmount] = useState(0)
+  const [inIntervalAmount, setInIntervalAmount] = useState(0)
+  const [absentAmount, setAbsentAmount] = useState(0)
+
 
   const companyName = localStorage.getItem('companyName')
   const companyId = localStorage.getItem('companyId')
@@ -26,7 +31,29 @@ export default function Profile(){
     }).then(response =>{
       setWorkers(response.data)
     })
-  },[companyId, workers])
+  },[companyId])
+
+  useEffect(()=>{
+    workers.forEach((worker)=>{
+      switch (worker.status) {
+        case "Verificado":
+          setVerifiedAmount(verifiedAmount + 1)
+          break
+        case "Não verificado":
+          setNotVerifiedAmount(notVerifiedAmount + 1)
+          break
+        case "Em Intervalo":
+          setInIntervalAmount(inIntervalAmount + 1)
+          break
+        case "Ausente":
+          setAbsentAmount(absentAmount + 1)
+          break
+        default:
+          break
+      }
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[workers])
 
   async function handleDeleteWorker(id){
     try {
@@ -52,21 +79,16 @@ export default function Profile(){
     history.push('/')
   }
 
-  function statisticCounter(status){
-    setTotalStatistic(0)
-    workers.forEach((worker)=>{worker.status===status && setTotalStatistic(totalStatistic + 1)})
-    return totalStatistic
-  }
 
   function defineSeeMoreColor(status){
     switch (status) {
-      case "Equipado":
+      case "Verificado":
         return "#2020d8"
-      case "Não Equipado":
+      case "Não verificado":
         return "#d00000"
       case "Em Intervalo":
         return "#f77f00"
-      case "Não verificado":
+      case "Ausente":
         return "#909090"
     
       default:
@@ -77,7 +99,7 @@ export default function Profile(){
   return(
     <div className="profile-container">
       <header>
-        <img src={logoImg} alt='Be the Hero' />
+        <img src={logoImg} alt='Vision' />
         <span>Bem Vindo(a), {companyName} </span>
 
         <Link className="button" to="/worker/new">Cadastrar Novo Funcionário</Link>
@@ -93,30 +115,30 @@ export default function Profile(){
 
           <li>
             <strong>
-              Equipados:
+              Verificados:{'   '}
+              {verifiedAmount}
             </strong> 
-            {() => statisticCounter("Equipado")}
           </li>
 
           <li>
             <strong>
-              Não Equipados:
+              Não Verificados:{'   '}
+              {notVerifiedAmount}
             </strong>
-            {() => statisticCounter("Não Equipado")}
           </li>
 
           <li>
             <strong>
-              Em Intervalo:
+              Em Intervalo:{'   '}
+              {inIntervalAmount}
             </strong> 
-            {() => statisticCounter("Em Intervalo")}
           </li>
 
           <li>
             <strong>
-              Sem informações:
+              Sem informações:{'   '}
+              {absentAmount}
             </strong> 
-            {() => statisticCounter("Não verificado")}
           </li>
 
         </ul>
