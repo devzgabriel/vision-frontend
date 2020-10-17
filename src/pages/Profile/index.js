@@ -9,16 +9,21 @@ import logoImg from '../../assets/eye.svg'
 
 
 export default function Profile(){
-  const [workers, setWorkers] = useState([])
+  
+  const companyName = localStorage.getItem('companyName')
+  const companyId = localStorage.getItem('companyId')
 
+  const [workers, setWorkers] = useState([])
+  
   const [verifiedAmount, setVerifiedAmount] = useState(0)
   const [notVerifiedAmount, setNotVerifiedAmount] = useState(0)
   const [inIntervalAmount, setInIntervalAmount] = useState(0)
   const [absentAmount, setAbsentAmount] = useState(0)
-
-
-  const companyName = localStorage.getItem('companyName')
-  const companyId = localStorage.getItem('companyId')
+  
+  const [verifiedList, setVerifiedList] = useState([])
+  const [notVerifiedList, setNotVerifiedList] = useState([])
+  const [inIntervalList, setInIntervalList] = useState([])
+  const [absentList, setAbsentList] = useState([])
 
   const history = useHistory()
 
@@ -37,21 +42,34 @@ export default function Profile(){
     workers.forEach((worker)=>{
       switch (worker.status) {
         case "Verificado":
-          setVerifiedAmount(verifiedAmount + 1)
+          setVerifiedAmount(verifiedAmount + 1)  // antigo
+          setVerifiedList(...verifiedList, worker) // novo
           break
         case "Não verificado":
+          // console.log(notVerifiedAmount)
           setNotVerifiedAmount(notVerifiedAmount + 1)
+          // console.log(notVerifiedAmount)
+          setNotVerifiedList(...notVerifiedList, worker)
+          console.log(notVerifiedList)
           break
         case "Em Intervalo":
           setInIntervalAmount(inIntervalAmount + 1)
+          setInIntervalList(...inIntervalList, worker)
           break
         case "Ausente":
           setAbsentAmount(absentAmount + 1)
+          setAbsentList(...absentList, worker)
           break
         default:
           break
       }
     })
+    console.log(notVerifiedAmount)
+
+    localStorage.setItem('verifiedList', verifiedList)
+    localStorage.setItem('notVerifiedList', notVerifiedList)
+    localStorage.setItem('inIntervalList', inIntervalList)
+    localStorage.setItem('absentList', absentList)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[workers])
 
