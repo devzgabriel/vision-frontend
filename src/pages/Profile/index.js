@@ -42,12 +42,12 @@ export default function Profile() {
       switch (worker.status) {
         case "Verificado":
           setVerifiedAmount((verifiedAmount) => verifiedAmount + 1); // antigo
-          setVerifiedList(...verifiedList, worker); // novo
+          setVerifiedList((verifiedList) => [...verifiedList, worker]); // novo
           console.log(verifiedList);
           break;
         case "Não verificado":
           setNotVerifiedAmount((notVerifiedAmount) => notVerifiedAmount + 1);
-          setNotVerifiedList(() => [...notVerifiedList, worker]);
+          setNotVerifiedList((notVerifiedList) => [...notVerifiedList, worker]);
           console.log(notVerifiedList);
           break;
         case "Em Intervalo":
@@ -57,7 +57,7 @@ export default function Profile() {
           break;
         case "Ausente":
           setAbsentAmount((absentAmount) => absentAmount + 1);
-          setAbsentList((worker) => [...absentList, worker]);
+          setAbsentList((absentList) => [...absentList, worker]);
           console.log(absentList);
           break;
         default:
@@ -153,7 +153,7 @@ export default function Profile() {
 
           <li>
             <strong>
-              Sem informações:{"   "}
+              Ausente:{"   "}
               {absentAmount}
             </strong>
           </li>
