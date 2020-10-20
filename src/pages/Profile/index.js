@@ -43,25 +43,27 @@ export default function Profile() {
         case "Verificado":
           setVerifiedAmount((verifiedAmount) => verifiedAmount + 1); // antigo
           setVerifiedList(...verifiedList, worker); // novo
+          console.log(verifiedList);
           break;
         case "Não verificado":
           setNotVerifiedAmount((notVerifiedAmount) => notVerifiedAmount + 1);
-          setNotVerifiedList(...notVerifiedList, worker);
+          setNotVerifiedList(() => [...notVerifiedList, worker]);
           console.log(notVerifiedList);
           break;
         case "Em Intervalo":
           setInIntervalAmount((inIntervalAmount) => inIntervalAmount + 1);
-          setInIntervalList(...inIntervalList, worker);
+          setInIntervalList((inIntervalList) => [...inIntervalList, worker]);
+          console.log(inIntervalList);
           break;
         case "Ausente":
           setAbsentAmount((absentAmount) => absentAmount + 1);
-          setAbsentList(...absentList, worker);
+          setAbsentList((worker) => [...absentList, worker]);
+          console.log(absentList);
           break;
         default:
           break;
       }
     });
-    console.log(notVerifiedAmount);
 
     localStorage.setItem("verifiedList", verifiedList);
     localStorage.setItem("notVerifiedList", notVerifiedList);
