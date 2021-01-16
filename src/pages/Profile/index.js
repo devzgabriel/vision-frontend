@@ -19,7 +19,7 @@ export default function Profile() {
   const [absentAmount, setAbsentAmount] = useState(0);
 
   const [verifiedList, setVerifiedList] = useState([]);
-  const [notVerifiedList, setNotVerifiedList] = useState([]);
+  const [notVerifiedList, setNotVerifiedList] = useState(["teste", "rwasd"]);
   const [inIntervalList, setInIntervalList] = useState([]);
   const [absentList, setAbsentList] = useState([]);
 
@@ -43,22 +43,27 @@ export default function Profile() {
         case "Verificado":
           setVerifiedAmount((verifiedAmount) => verifiedAmount + 1); // antigo
           setVerifiedList((verifiedList) => [...verifiedList, worker]); // novo
-          console.log(verifiedList);
+          // console.log(verifiedList);
           break;
         case "Não verificado":
+          console.log(notVerifiedList);
+          console.log(worker);
           setNotVerifiedAmount((notVerifiedAmount) => notVerifiedAmount + 1);
-          setNotVerifiedList((notVerifiedList) => [...notVerifiedList, worker]);
+          setNotVerifiedList((notVerifiedList) => [
+            ...notVerifiedList,
+            "worker",
+          ]);
           console.log(notVerifiedList);
           break;
         case "Em Intervalo":
           setInIntervalAmount((inIntervalAmount) => inIntervalAmount + 1);
           setInIntervalList((inIntervalList) => [...inIntervalList, worker]);
-          console.log(inIntervalList);
+          // console.log(inIntervalList);
           break;
         case "Ausente":
           setAbsentAmount((absentAmount) => absentAmount + 1);
           setAbsentList((absentList) => [...absentList, worker]);
-          console.log(absentList);
+          // console.log(absentList);
           break;
         default:
           break;
